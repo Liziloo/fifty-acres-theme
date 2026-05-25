@@ -3,17 +3,25 @@ $escape = $this->plugin('escapeHtml');
 $this->headLink()->appendStylesheet($this->assetUrl('css/style.css'));
 $this->headScript()->prependFile('https://code.jquery.com/jquery-3.7.1.min.js');
 
-// Fetch GUI Settings
+// Fetch dynamic assets from Theme Settings
 $logoUrl = $this->themeSettingAssetUrl('logo');
 $bannerUrl = $this->themeSettingAssetUrl('banner');
-$bannerHeight = $this->themeSetting('banner_height', 400); // Default 400
+$bannerHeight = $this->themeSetting('banner_height', 400);
 $bannerVisibility = $this->themeSetting('banner_visibility', 'home');
 $footerText = $this->themeSetting('footer_text');
 
-// Logic for visibility
+// Robust Homepage Check (Fixes Fatal Error)
+$isHome = false;
+if ($this->status()->isSiteRequest() &&
+    $this->params()->fromRoute('controller') === 'index' &&
+    $this->params()->fromRoute('action') === 'index') {
+    $isHome = true;
+}
+
+// Visibility Logic
 $showBanner = false;
 if ($bannerUrl) {
-    if ($bannerVisibility === 'all' || ($bannerVisibility === 'home' && $this->status()->isSiteHome())) {
+    if ($bannerVisibility === 'all' || ($bannerVisibility === 'home' && $isHome)) {
         $showBanner = true;
     }
 }
