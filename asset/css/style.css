@@ -8,19 +8,22 @@
   --sidebar-width: 280px;
 }
 
-/* --- 2. CORE LAYOUT --- */
-body {
+/* --- 2. GLOBAL RESET --- */
+html, body {
     margin: 0;
+    padding: 0;
     background-color: var(--old-lace);
     font-family: 'Georgia', serif;
     color: var(--black);
 }
 
-/* Fix the Admin Bar so it doesn't break the Flexbox layout */
+/* Float admin bar so it doesn't interfere with the layout grid */
 #user-bar {
-    position: sticky;
+    position: absolute;
     top: 0;
-    z-index: 2000;
+    left: 0;
+    width: 100%;
+    z-index: 5000;
 }
 
 #site-wrapper {
@@ -28,7 +31,7 @@ body {
     min-height: 100vh;
 }
 
-/* --- 3. SIDEBAR (FIXED RAIL) --- */
+/* --- 3. SIDEBAR (THE FIXED RAIL) --- */
 #sidebar {
     width: var(--sidebar-width);
     background-color: var(--sage);
@@ -36,9 +39,9 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 50px 30px;
+    padding: 60px 30px 40px;
     box-sizing: border-box;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .branding img {
@@ -48,32 +51,66 @@ body {
     border: 4px solid var(--old-lace);
     background: #fff;
     object-fit: cover;
-    margin: 0 auto 40px auto;
+    margin: 0 auto 40px;
     display: block;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 #main-nav ul { list-style: none; padding: 0; text-align: center; }
+#main-nav li { margin-bottom: 20px; }
 #main-nav a {
     color: var(--black);
     text-decoration: none;
     font-variant: small-caps;
     font-size: 1.4rem;
-    letter-spacing: 1.5px;
-    line-height: 2.5;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+#main-nav a:hover { color: var(--dusty-mauve); }
+
+#sidebar-footer {
+    margin-top: auto;
+    text-align: center;
 }
 
-#sidebar-footer { margin-top: auto; text-align: center; }
 .est {
     display: block;
     font-size: 0.8rem;
     color: var(--dusty-mauve);
     letter-spacing: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-weight: bold;
 }
 
-/* --- 4. CONTENT STAGE & BANNER --- */
+/* --- 4. JOINED SEARCH UNIT --- */
+#search-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#search-form input[type="text"] {
+    padding: 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 4px 4px 0 0;
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    background: #fff;
+}
+
+#search-form button {
+    background: var(--rusty-spice);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 0 0 4px 4px;
+    font-variant: small-caps;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: background 0.3s;
+}
+#search-form button:hover { background: var(--dusty-mauve); }
+
+/* --- 5. CONTENT STAGE & BANNER --- */
 #content-stage {
     margin-left: var(--sidebar-width);
     flex: 1;
@@ -84,7 +121,7 @@ body {
 #global-banner {
     width: 100%;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center;
     background-size: cover;
     border-bottom: 1px solid rgba(0,0,0,0.1);
 }
@@ -93,71 +130,80 @@ body {
     padding: 60px 80px;
     max-width: 1100px;
     margin: 0 auto;
-    flex: 1;
     width: 100%;
     box-sizing: border-box;
+    flex: 1;
 }
 
-/* --- 5. GLOBAL BLOCK FOUNDATION --- */
+/* --- 6. GLOBAL BLOCK FOUNDATION --- */
 .block { margin-bottom: 80px; clear: both; }
 
 .block h2, .block-pageTitle h2 {
     color: var(--dusty-mauve);
-    font-family: 'Georgia', serif;
     font-variant: small-caps;
     font-weight: normal;
     font-size: 2.2rem;
     border-bottom: 1px solid var(--sage);
     padding-bottom: 15px;
     margin-bottom: 30px;
+    margin-top: 0;
+}
+
+.block p, .block li {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    margin-bottom: 1.5em;
 }
 
 .block img {
     max-width: 100%;
     height: auto;
-    display: block;
-    margin: 0 auto;
     border: 1px solid #fff;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    background-color: #fff;
+    background: #fff;
     padding: 5px;
+    margin: 0 auto;
+    display: block;
 }
 
-/* --- 6. SEARCH UNIT --- */
-#search-form { display: flex; flex-direction: column; }
-#search-form input {
-    padding: 12px;
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 4px 4px 0 0;
-}
-#search-form button {
-    background: var(--rusty-spice);
-    color: #fff;
-    border: none;
-    padding: 12px;
-    border-radius: 0 0 4px 4px;
-    font-variant: small-caps;
-    cursor: pointer;
-}
-
-/* --- 7. CAROUSEL & MODULE FIXES --- */
-/* Ensures Slick Carousel finds its horizontal flow */
+/* --- 7. SLICK CAROUSEL REFINEMENTS --- */
 .slick-track { display: flex !important; align-items: center; }
 .slick-slide { padding: 0 20px; outline: none; }
 .slide-text .title a {
     display: block;
-    margin-top: 15px;
+    margin-top: 20px;
     color: var(--rusty-spice);
     text-decoration: none;
     font-weight: bold;
     text-align: center;
 }
 
-/* --- 8. RESPONSIVE --- */
+/* --- 8. FOOTER --- */
+#site-footer {
+    padding: 60px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--sage);
+    font-variant: small-caps;
+    letter-spacing: 1px;
+}
+
+/* --- 9. RESPONSIVE ARCHITECTURE --- */
 @media (max-width: 1024px) {
     #site-wrapper { flex-direction: column; }
-    #sidebar { width: 100%; height: auto; position: relative; padding: 30px; }
+
+    #sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 40px 20px;
+    }
+
     #content-stage { margin-left: 0; }
+
     #global-banner { height: 250px !important; }
+
     #main-content { padding: 40px 20px; }
+
+    .branding img { width: 120px; height: 120px; }
 }
