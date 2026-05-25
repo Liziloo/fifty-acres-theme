@@ -42,7 +42,11 @@ $footerText = $this->themeSetting('footer_text');
 
         <main id="content-stage">
             <?php if ($bannerAsset): ?>
-                <div id="global-banner" style="background-image: url('<?= $bannerAsset; ?>');"></div>
+                <div id="global-banner"
+                    role="img"
+                    aria-label="<?= $escape($this->themeSetting('banner_alt')); ?>"
+                    style="background-image: url('<?= $bannerAsset; ?>');">
+                </div>
             <?php endif; ?>
 
             <div id="main-content">
