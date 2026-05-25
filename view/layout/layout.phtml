@@ -1,35 +1,32 @@
 <?php
 $escape = $this->plugin('escapeHtml');
-$this->headLink()->appendStylesheet($this->assetUrl('css/style.css'));
+// 1. Queue jQuery (Mandatory for modules)
 $this->headScript()->prependFile('https://code.jquery.com/jquery-3.7.1.min.js');
+// 2. Queue Theme CSS
+$this->headLink()->appendStylesheet($this->assetUrl('css/style.css'));
 
-// Fetch dynamic assets from Theme Settings
+// Fetch GUI Settings
 $logoUrl = $this->themeSettingAssetUrl('logo');
 $bannerUrl = $this->themeSettingAssetUrl('banner');
 $bannerHeight = $this->themeSetting('banner_height', 400);
 $bannerVisibility = $this->themeSetting('banner_visibility', 'home');
 $footerText = $this->themeSetting('footer_text');
 
-// Simplified visibility logic to ensure banner appears
-$isHome = ($this->params()->fromRoute('controller') === 'index');
-$showBanner = false;
-if ($bannerUrl) {
-    if ($bannerVisibility === 'all' || $isHome) {
-        $showBanner = true;
-    }
-}
+// Robust Route Check
+$isHome = ($this->params()->fromRoute('controller') === 'index' && $this->params()->fromRoute('action') === 'index');
+$showBanner = ($bannerUrl && ($bannerVisibility === 'all' || $isHome));
 ?>
 <?= $this->doctype(); ?>
 <html lang="<?= $this->lang(); ?>">
 <head>
     <?= $this->headMeta(); ?>
     <?= $this->headTitle(); ?>
-    <!-- Mailbox for Module CSS (Slick, Mapping, etc) -->
+    <!-- Module CSS (Slick, etc) loads here -->
     <?= $this->headLink(); ?>
     <?= $this->headStyle(); ?>
 </head>
 <body>
-    <!-- 1. Admin Bar stays at the very top, outside the flex wrapper -->
+    <!-- Admin bar stays outside the flex wrapper -->
     <?= $this->userBar(); ?>
 
     <div id="site-wrapper">
@@ -43,14 +40,10 @@ if ($bannerUrl) {
                     <?php endif; ?>
                 </a>
             </div>
-
-            <nav id="main-nav">
-                <?= $site->publicNav()->menu(); ?>
-            </nav>
-
+            <nav id="main-nav"><?= $site->publicNav()->menu(); ?></nav>
             <div id="sidebar-footer">
                 <span class="est">EST. 1856</span>
-                <?php echo $this->partial('common/search-form'); ?>
+                <?= $this->partial('common/search-form'); ?>
             </div>
         </aside>
 
@@ -67,13 +60,11 @@ if ($bannerUrl) {
                 <?= $this->content; ?>
             </div>
 
-            <footer id="site-footer">
-                <?= $footerText ? $escape($footerText) : '© ' . date('Y') . ' Liz Casler Loomans'; ?>
-            </footer>
+            <footer id="site-footer"><?= $footerText ? $escape($footerText) : ''; ?></footer>
         </main>
     </div>
 
-    <!-- 2. Mailbox for Module JS (The Carousel Engine) -->
+    <!-- Module JS (Slick engine) loads here -->
     <?= $this->headScript(); ?>
 </body>
 </html>
