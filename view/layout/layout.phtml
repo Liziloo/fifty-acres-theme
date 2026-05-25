@@ -1,8 +1,12 @@
 <?php
 $escape = $this->plugin('escapeHtml');
-$this->headLink()->prependStylesheet($this->assetUrl('css/style.css'));
+// 1. Queue your theme CSS
+$this->headLink()->appendStylesheet($this->assetUrl('css/style.css'));
 
-// Correct helpers for Theme-specific GUI assets
+// 2. Queue jQuery (The engine for 90% of Omeka modules)
+$this->headScript()->prependFile('https://code.jquery.com/jquery-3.7.1.min.js');
+
+// Fetch dynamic assets from Theme Settings
 $logoUrl = $this->themeSettingAssetUrl('logo');
 $bannerUrl = $this->themeSettingAssetUrl('banner');
 $footerText = $this->themeSetting('footer_text');
@@ -12,8 +16,12 @@ $footerText = $this->themeSetting('footer_text');
 <head>
     <?= $this->headMeta(); ?>
     <?= $this->headTitle(); ?>
+
+    <!-- 3. THE CSS MAILBOX: Modules deliver their CSS here -->
     <?= $this->headLink(); ?>
-    <?= $this->headScript(); ?>
+
+    <!-- 4. THE INLINE SCRIPT MAILBOX: Modules deliver their config here -->
+    <?= $this->headStyle(); ?>
 </head>
 <body>
     <?= $this->userBar(); ?>
@@ -58,5 +66,10 @@ $footerText = $this->themeSetting('footer_text');
             </footer>
         </main>
     </div>
+
+
+    <!-- 5. THE JS MAILBOX: Modules deliver their JS here -->
+    <!-- Placing this at the bottom ensures the DOM is ready for modules to fire -->
+    <?= $this->headScript(); ?>
 </body>
 </html>
