@@ -1,0 +1,56 @@
+<?php
+$escape = $this->plugin('escapeHtml');
+// Fetch the Logo from Site Settings
+$logoUrl = $this->logoUrl();
+// Fetch the Banner from Theme Settings
+$bannerAsset = $this->themeSettingAssetUrl('banner');
+$this->headLink()->prependStylesheet($this->assetUrl('css/style.css'));
+?>
+<?= $this->doctype(); ?>
+<html lang="<?= $this->lang(); ?>">
+<head>
+    <?= $this->headMeta(); ?>
+    <?= $this->headTitle(); ?>
+    <?= $this->headLink(); ?>
+    <?= $this->headScript(); ?>
+</head>
+<body>
+    <?= $this->userBar(); ?>
+    
+    <div id="site-wrapper">
+        <aside id="sidebar">
+            <div class="branding">
+                <a href="<?= $site->url(); ?>">
+                    <?php if ($logoUrl): ?>
+                        <img src="<?= $logoUrl; ?>" alt="<?= $this->themeSetting('logo_alt'); ?>">
+                    <?php else: ?>
+                        <h1><?= $escape($site->title()); ?></h1>
+                    <?php endif; ?>
+                </a>
+            </div>
+
+            <nav id="main-nav">
+                <?= $site->publicNav()->menu(); ?>
+            </nav>
+
+            <div id="sidebar-footer">
+                <span class="est">EST. 1856</span>
+                <?= $this->searchForm(); ?>
+            </div>
+        </aside>
+
+        <main id="content-stage">
+            <?php if ($bannerAsset): ?>
+                <div id="global-banner" style="background-image: url('<?= $bannerAsset; ?>');"></div>
+            <?php endif; ?>
+            
+            <div id="main-content">
+                <?= $this->content; ?>
+            </div>
+            <footer id="site-footer">
+                © <?= date('Y'); ?> Liz Casler Loomans
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
