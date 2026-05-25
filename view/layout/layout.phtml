@@ -10,18 +10,11 @@ $bannerHeight = $this->themeSetting('banner_height', 400);
 $bannerVisibility = $this->themeSetting('banner_visibility', 'home');
 $footerText = $this->themeSetting('footer_text');
 
-// Robust Homepage Check (Fixes Fatal Error)
-$isHome = false;
-if ($this->status()->isSiteRequest() &&
-    $this->params()->fromRoute('controller') === 'index' &&
-    $this->params()->fromRoute('action') === 'index') {
-    $isHome = true;
-}
-
-// Visibility Logic
+// Simplified visibility logic to ensure banner appears
+$isHome = ($this->params()->fromRoute('controller') === 'index');
 $showBanner = false;
 if ($bannerUrl) {
-    if ($bannerVisibility === 'all' || ($bannerVisibility === 'home' && $isHome)) {
+    if ($bannerVisibility === 'all' || $isHome) {
         $showBanner = true;
     }
 }
@@ -31,14 +24,12 @@ if ($bannerUrl) {
 <head>
     <?= $this->headMeta(); ?>
     <?= $this->headTitle(); ?>
-
-    <!-- 3. THE CSS MAILBOX: Modules deliver their CSS here -->
+    <!-- Mailbox for Module CSS (Slick, Mapping, etc) -->
     <?= $this->headLink(); ?>
-
-    <!-- 4. THE INLINE SCRIPT MAILBOX: Modules deliver their config here -->
     <?= $this->headStyle(); ?>
 </head>
 <body>
+    <!-- 1. Admin Bar stays at the very top, outside the flex wrapper -->
     <?= $this->userBar(); ?>
 
     <div id="site-wrapper">
@@ -77,14 +68,12 @@ if ($bannerUrl) {
             </div>
 
             <footer id="site-footer">
-                <?= $footerText ? $escape($footerText) : ''; ?>
+                <?= $footerText ? $escape($footerText) : '© ' . date('Y') . ' Liz Casler Loomans'; ?>
             </footer>
         </main>
     </div>
 
-
-    <!-- 5. THE JS MAILBOX: Modules deliver their JS here -->
-    <!-- Placing this at the bottom ensures the DOM is ready for modules to fire -->
+    <!-- 2. Mailbox for Module JS (The Carousel Engine) -->
     <?= $this->headScript(); ?>
 </body>
 </html>
