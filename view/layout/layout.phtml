@@ -2,9 +2,9 @@
 $escape = $this->plugin('escapeHtml');
 $this->headLink()->prependStylesheet($this->assetUrl('css/style.css'));
 
-// Fetch dynamic assets from the GUI
-$logoUrl = $this->logoUrl();
-$bannerAsset = $this->themeSettingAssetUrl('banner');
+// Correct helpers for Theme-specific GUI assets
+$logoUrl = $this->themeSettingAssetUrl('logo');
+$bannerUrl = $this->themeSettingAssetUrl('banner');
 $footerText = $this->themeSetting('footer_text');
 ?>
 <?= $this->doctype(); ?>
@@ -41,11 +41,11 @@ $footerText = $this->themeSetting('footer_text');
         </aside>
 
         <main id="content-stage">
-            <?php if ($bannerAsset): ?>
+            <?php if ($bannerUrl): ?>
                 <div id="global-banner"
-                    role="img"
-                    aria-label="<?= $escape($this->themeSetting('banner_alt')); ?>"
-                    style="background-image: url('<?= $bannerAsset; ?>');">
+                     role="img"
+                     aria-label="<?= $escape($this->themeSetting('banner_alt')); ?>"
+                     style="background-image: url('<?= $bannerUrl; ?>');">
                 </div>
             <?php endif; ?>
 
