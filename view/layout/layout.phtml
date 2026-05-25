@@ -1,15 +1,22 @@
 <?php
 $escape = $this->plugin('escapeHtml');
-// 1. Queue your theme CSS
 $this->headLink()->appendStylesheet($this->assetUrl('css/style.css'));
-
-// 2. Queue jQuery (The engine for 90% of Omeka modules)
 $this->headScript()->prependFile('https://code.jquery.com/jquery-3.7.1.min.js');
 
-// Fetch dynamic assets from Theme Settings
+// Fetch GUI Settings
 $logoUrl = $this->themeSettingAssetUrl('logo');
 $bannerUrl = $this->themeSettingAssetUrl('banner');
+$bannerHeight = $this->themeSetting('banner_height', 400); // Default 400
+$bannerVisibility = $this->themeSetting('banner_visibility', 'home');
 $footerText = $this->themeSetting('footer_text');
+
+// Logic for visibility
+$showBanner = false;
+if ($bannerUrl) {
+    if ($bannerVisibility === 'all' || ($bannerVisibility === 'home' && $this->status()->isSiteHome())) {
+        $showBanner = true;
+    }
+}
 ?>
 <?= $this->doctype(); ?>
 <html lang="<?= $this->lang(); ?>">
@@ -49,11 +56,11 @@ $footerText = $this->themeSetting('footer_text');
         </aside>
 
         <main id="content-stage">
-            <?php if ($bannerUrl): ?>
+            <?php if ($showBanner): ?>
                 <div id="global-banner"
                      role="img"
                      aria-label="<?= $escape($this->themeSetting('banner_alt')); ?>"
-                     style="background-image: url('<?= $bannerUrl; ?>');">
+                     style="background-image: url('<?= $bannerUrl; ?>'); height: <?= $bannerHeight; ?>px;">
                 </div>
             <?php endif; ?>
 
@@ -62,7 +69,7 @@ $footerText = $this->themeSetting('footer_text');
             </div>
 
             <footer id="site-footer">
-                <?= $footerText ? $escape($footerText) : '© ' . date('Y') . ' Liz Casler Loomans'; ?>
+                <?= $footerText ? $escape($footerText) : ''; ?>
             </footer>
         </main>
     </div>
