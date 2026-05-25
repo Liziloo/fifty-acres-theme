@@ -1,10 +1,11 @@
 <?php
 $escape = $this->plugin('escapeHtml');
-// Fetch the Logo from Site Settings
-$logoUrl = $this->logoUrl();
-// Fetch the Banner from Theme Settings
-$bannerAsset = $this->themeSettingAssetUrl('banner');
 $this->headLink()->prependStylesheet($this->assetUrl('css/style.css'));
+
+// Fetch dynamic assets from the GUI
+$logoUrl = $this->logoUrl();
+$bannerAsset = $this->themeSettingAssetUrl('banner');
+$footerText = $this->themeSetting('footer_text');
 ?>
 <?= $this->doctype(); ?>
 <html lang="<?= $this->lang(); ?>">
@@ -16,13 +17,13 @@ $this->headLink()->prependStylesheet($this->assetUrl('css/style.css'));
 </head>
 <body>
     <?= $this->userBar(); ?>
-    
+
     <div id="site-wrapper">
         <aside id="sidebar">
             <div class="branding">
                 <a href="<?= $site->url(); ?>">
                     <?php if ($logoUrl): ?>
-                        <img src="<?= $logoUrl; ?>" alt="<?= $this->themeSetting('logo_alt'); ?>">
+                        <img src="<?= $logoUrl; ?>" alt="<?= $escape($this->themeSetting('logo_alt')); ?>">
                     <?php else: ?>
                         <h1><?= $escape($site->title()); ?></h1>
                     <?php endif; ?>
@@ -43,12 +44,13 @@ $this->headLink()->prependStylesheet($this->assetUrl('css/style.css'));
             <?php if ($bannerAsset): ?>
                 <div id="global-banner" style="background-image: url('<?= $bannerAsset; ?>');"></div>
             <?php endif; ?>
-            
+
             <div id="main-content">
                 <?= $this->content; ?>
             </div>
+
             <footer id="site-footer">
-                © <?= date('Y'); ?> Liz Casler Loomans
+                <?= $footerText ? $escape($footerText) : '© ' . date('Y') . ' Liz Casler Loomans'; ?>
             </footer>
         </main>
     </div>
