@@ -1,3 +1,4 @@
+/* --- 1. VARIABLES --- */
 :root {
   --old-lace: #faf1e3;
   --sage: #9da06f;
@@ -7,6 +8,7 @@
   --sidebar-width: 280px;
 }
 
+/* --- 2. CORE LAYOUT --- */
 body {
     margin: 0;
     background-color: var(--old-lace);
@@ -19,7 +21,7 @@ body {
     min-height: 100vh;
 }
 
-/* SIDEBAR */
+/* --- 3. SIDEBAR (FIXED RAIL) --- */
 #sidebar {
     width: var(--sidebar-width);
     background-color: var(--sage);
@@ -32,20 +34,19 @@ body {
     z-index: 100;
 }
 
-/* SIDEBAR LOGO */
 .branding img {
-    width: 170px; /* Fixed size for the circular 'H' */
+    width: 170px;
     height: 170px;
     border-radius: 50%;
     border: 4px solid var(--old-lace);
     background: #fff;
-    object-fit: cover; /* Ensures uploaded image fills the circle */
+    object-fit: cover;
     margin: 0 auto 40px auto;
     display: block;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 #main-nav ul { list-style: none; padding: 0; text-align: center; }
-
 #main-nav a {
     color: var(--black);
     text-decoration: none;
@@ -56,16 +57,16 @@ body {
 }
 
 #sidebar-footer { margin-top: auto; text-align: center; }
-.est { 
-    display: block; 
-    font-size: 0.8rem; 
-    color: var(--dusty-mauve); 
-    letter-spacing: 4px; 
+.est {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--dusty-mauve);
+    letter-spacing: 4px;
     margin-bottom: 10px;
     font-weight: bold;
 }
 
-/* CONTENT STAGE */
+/* --- 4. CONTENT STAGE & BANNER --- */
 #content-stage {
     margin-left: var(--sidebar-width);
     flex: 1;
@@ -73,24 +74,67 @@ body {
     flex-direction: column;
 }
 
-/* BANNER STAGE */
 #global-banner {
     width: 100%;
-    height: 480px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
+/* --- 5. GLOBAL BLOCK FOUNDATION --- */
+/* This handles ALL content modules automatically */
+
 #main-content {
     padding: 60px 80px;
-    max-width: 1100px;
+    max-width: 1100px; /* Golden Ratio reading width */
     margin: 0 auto;
     flex: 1;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* SEARCH UNIT */
+/* Generic block spacing for vertical rhythm */
+.block {
+    margin-bottom: 80px;
+    clear: both;
+}
+
+/* Global Block Headings (Highlights, Page Titles, etc.) */
+.block h2,
+.block-pageTitle h2 {
+    color: var(--dusty-mauve);
+    font-family: 'Georgia', serif;
+    font-variant: small-caps;
+    font-weight: normal;
+    font-size: 2.2rem;
+    border-bottom: 1px solid var(--sage);
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    margin-top: 0;
+}
+
+/* Global Archival Image Standard */
+/* This styles images in Carousels, HTML blocks, and Browse pages automatically */
+.block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background-color: #fff;
+    padding: 5px; /* Polaroid frame effect */
+}
+
+/* Generic Typography */
+.block p, .block li {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    margin-bottom: 1.5em;
+}
+
+/* --- 6. SEARCH UNIT --- */
 #search-form { display: flex; flex-direction: column; }
 #search-form input {
     padding: 12px;
@@ -110,7 +154,30 @@ body {
     letter-spacing: 1px;
 }
 
-/* RESPONSIVE */
+/* --- 7. INTERACTIVE MODULE OVERRIDES --- */
+/* Minimal fixes for Slick Carousel to respect our layout */
+.slick-track { display: flex !important; align-items: center; }
+.slick-slide { padding: 0 20px; outline: none; }
+.slide-text .title a {
+    display: block;
+    margin-top: 15px;
+    color: var(--rusty-spice);
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* --- 8. FOOTER --- */
+#site-footer {
+    padding: 60px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--sage);
+    font-variant: small-caps;
+    letter-spacing: 1px;
+}
+
+/* --- 9. RESPONSIVE --- */
 @media (max-width: 1024px) {
     #site-wrapper { flex-direction: column; }
     #sidebar { width: 100%; height: auto; position: relative; padding: 30px; }
