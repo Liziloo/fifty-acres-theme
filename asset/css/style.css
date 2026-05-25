@@ -16,6 +16,13 @@ body {
     color: var(--black);
 }
 
+/* Fix the Admin Bar so it doesn't break the Flexbox layout */
+#user-bar {
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+}
+
 #site-wrapper {
     display: flex;
     min-height: 100vh;
@@ -51,7 +58,7 @@ body {
     color: var(--black);
     text-decoration: none;
     font-variant: small-caps;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     letter-spacing: 1.5px;
     line-height: 2.5;
 }
@@ -82,27 +89,19 @@ body {
     border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
-/* --- 5. GLOBAL BLOCK FOUNDATION --- */
-/* This handles ALL content modules automatically */
-
 #main-content {
     padding: 60px 80px;
-    max-width: 1100px; /* Golden Ratio reading width */
+    max-width: 1100px;
     margin: 0 auto;
     flex: 1;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Generic block spacing for vertical rhythm */
-.block {
-    margin-bottom: 80px;
-    clear: both;
-}
+/* --- 5. GLOBAL BLOCK FOUNDATION --- */
+.block { margin-bottom: 80px; clear: both; }
 
-/* Global Block Headings (Highlights, Page Titles, etc.) */
-.block h2,
-.block-pageTitle h2 {
+.block h2, .block-pageTitle h2 {
     color: var(--dusty-mauve);
     font-family: 'Georgia', serif;
     font-variant: small-caps;
@@ -111,11 +110,8 @@ body {
     border-bottom: 1px solid var(--sage);
     padding-bottom: 15px;
     margin-bottom: 30px;
-    margin-top: 0;
 }
 
-/* Global Archival Image Standard */
-/* This styles images in Carousels, HTML blocks, and Browse pages automatically */
 .block img {
     max-width: 100%;
     height: auto;
@@ -124,14 +120,7 @@ body {
     border: 1px solid #fff;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     background-color: #fff;
-    padding: 5px; /* Polaroid frame effect */
-}
-
-/* Generic Typography */
-.block p, .block li {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    margin-bottom: 1.5em;
+    padding: 5px;
 }
 
 /* --- 6. SEARCH UNIT --- */
@@ -140,8 +129,6 @@ body {
     padding: 12px;
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 4px 4px 0 0;
-    font-family: 'Georgia', serif;
-    font-style: italic;
 }
 #search-form button {
     background: var(--rusty-spice);
@@ -151,11 +138,10 @@ body {
     border-radius: 0 0 4px 4px;
     font-variant: small-caps;
     cursor: pointer;
-    letter-spacing: 1px;
 }
 
-/* --- 7. INTERACTIVE MODULE OVERRIDES --- */
-/* Minimal fixes for Slick Carousel to respect our layout */
+/* --- 7. CAROUSEL & MODULE FIXES --- */
+/* Ensures Slick Carousel finds its horizontal flow */
 .slick-track { display: flex !important; align-items: center; }
 .slick-slide { padding: 0 20px; outline: none; }
 .slide-text .title a {
@@ -167,21 +153,11 @@ body {
     text-align: center;
 }
 
-/* --- 8. FOOTER --- */
-#site-footer {
-    padding: 60px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--sage);
-    font-variant: small-caps;
-    letter-spacing: 1px;
-}
-
-/* --- 9. RESPONSIVE --- */
+/* --- 8. RESPONSIVE --- */
 @media (max-width: 1024px) {
     #site-wrapper { flex-direction: column; }
     #sidebar { width: 100%; height: auto; position: relative; padding: 30px; }
     #content-stage { margin-left: 0; }
-    #global-banner { height: 250px; }
+    #global-banner { height: 250px !important; }
     #main-content { padding: 40px 20px; }
 }
