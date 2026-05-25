@@ -1,4 +1,4 @@
-<form action="<?= $this->escapeHtml($this->url('site/search', [], true)); ?>" id="search-form">
+<form action="<?= $this->escapeHtml($this->url('site/resource', ['action' => 'browse'], true)); ?>" id="search-form">
     <input type="text" name="fulltext_search" value="" placeholder="Search the archive..." aria-label="Search">
-    <button type="submit" value="Search">Search</button>
+    <button type="submit">Search</button>
 </form>
