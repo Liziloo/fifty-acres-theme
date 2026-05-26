@@ -1,3 +1,14 @@
+# Fifty Acres Theme (Custom Fork)
+
+This repository is a custom implementation of the **Foundation S** theme for Omeka S, specifically tailored for the historical
+and narrative requirements of **TheFiftyAcres.com**.
+
+* **Customizations by:** Elizabeth Loomans
+* **Base Theme:** Foundation S by the Corporation for Digital Scholarship
+* **Upstream Repository:** [Foundation S](https://github.com/omeka-s-themes/foundation)
+
+---
+
 # Foundation S
 
 This is an Omeka S theme based on ZURB Foundation Sites. It currently comes with a default stylesheet for prototyping as well as 3 other style options.
@@ -132,6 +143,9 @@ Main with sidebar, right sidebar
 
 ## Copyright
 Foundation S is Copyright © 2020-present Corporation for Digital Scholarship, Vienna, Virginia, USA http://digitalscholar.org
+
+Customizations and site-specific asset modifications are
+Copyright © 2026-present Elizabeth Loomans.
 
 The Corporation for Digital Scholarship distributes the Omeka source code
 under the GNU General Public License, version 3 (GPLv3). The full text
